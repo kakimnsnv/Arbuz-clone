@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B867741E2BF4116A004DF56D /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = B867741D2BF4116A004DF56D /* URLImage */; };
+		B86774202BF4116A004DF56D /* URLImageStore in Frameworks */ = {isa = PBXBuildFile; productRef = B867741F2BF4116A004DF56D /* URLImageStore */; };
 		B8FB38B12BF3FE9E002FBB1D /* Arbuz_cloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FB38B02BF3FE9E002FBB1D /* Arbuz_cloneApp.swift */; };
 		B8FB38B32BF3FE9E002FBB1D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FB38B22BF3FE9E002FBB1D /* ContentView.swift */; };
 		B8FB38B52BF3FE9F002FBB1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8FB38B42BF3FE9F002FBB1D /* Assets.xcassets */; };
 		B8FB38B82BF3FE9F002FBB1D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8FB38B72BF3FE9F002FBB1D /* Preview Assets.xcassets */; };
 		B8FB38C02BF3FF9B002FBB1D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FB38BF2BF3FF9B002FBB1D /* Product.swift */; };
+		B8FB38C72BF40682002FBB1D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FB38C62BF40682002FBB1D /* HomeViewModel.swift */; };
+		B8FB38C92BF407FA002FBB1D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FB38C82BF407FA002FBB1D /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +25,8 @@
 		B8FB38B42BF3FE9F002FBB1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B8FB38B72BF3FE9F002FBB1D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B8FB38BF2BF3FF9B002FBB1D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		B8FB38C62BF40682002FBB1D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		B8FB38C82BF407FA002FBB1D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,6 +34,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B86774202BF4116A004DF56D /* URLImageStore in Frameworks */,
+				B867741E2BF4116A004DF56D /* URLImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +101,8 @@
 		B8FB38C22BF3FFD5002FBB1D /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				B8FB38C62BF40682002FBB1D /* HomeViewModel.swift */,
+				B8FB38C82BF407FA002FBB1D /* HomeView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -134,6 +144,10 @@
 			dependencies = (
 			);
 			name = "Arbuz-clone";
+			packageProductDependencies = (
+				B867741D2BF4116A004DF56D /* URLImage */,
+				B867741F2BF4116A004DF56D /* URLImageStore */,
+			);
 			productName = "Arbuz-clone";
 			productReference = B8FB38AD2BF3FE9E002FBB1D /* Arbuz-clone.app */;
 			productType = "com.apple.product-type.application";
@@ -162,6 +176,9 @@
 				Base,
 			);
 			mainGroup = B8FB38A42BF3FE9E002FBB1D;
+			packageReferences = (
+				B867741C2BF4116A004DF56D /* XCRemoteSwiftPackageReference "url-image" */,
+			);
 			productRefGroup = B8FB38AE2BF3FE9E002FBB1D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -191,6 +208,8 @@
 				B8FB38B32BF3FE9E002FBB1D /* ContentView.swift in Sources */,
 				B8FB38B12BF3FE9E002FBB1D /* Arbuz_cloneApp.swift in Sources */,
 				B8FB38C02BF3FF9B002FBB1D /* Product.swift in Sources */,
+				B8FB38C92BF407FA002FBB1D /* HomeView.swift in Sources */,
+				B8FB38C72BF40682002FBB1D /* HomeViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,11 +346,14 @@
 				DEVELOPMENT_TEAM = ARBVNWRV3Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Arbuz;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -356,11 +378,14 @@
 				DEVELOPMENT_TEAM = ARBVNWRV3Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Arbuz;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -396,6 +421,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B867741C2BF4116A004DF56D /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B867741D2BF4116A004DF56D /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B867741C2BF4116A004DF56D /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
+		};
+		B867741F2BF4116A004DF56D /* URLImageStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B867741C2BF4116A004DF56D /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImageStore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B8FB38A52BF3FE9E002FBB1D /* Project object */;
 }
