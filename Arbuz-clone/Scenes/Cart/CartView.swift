@@ -9,7 +9,7 @@ import SwiftUI
 import URLImage
 
 struct CartView: View {
-    @ObservedObject var viewModel: CartViewModel
+    @EnvironmentObject var viewModel: CartViewModel
     
     var body: some View {
         NavigationView{
@@ -19,7 +19,7 @@ struct CartView: View {
                         AddressComponent()
                             .padding(.bottom, 30)
                         
-                        CartComponent(viewModel: viewModel)
+                        CartComponent()
                             .padding(.bottom, 60)
                         
                         HorizontalCollectionView(title: viewModel.suggestionsCollections[0].title, products: viewModel.suggestionsCollections[0].products)
@@ -30,6 +30,8 @@ struct CartView: View {
                     CheckoutButton(amount: viewModel.cart.total)
                 }
             }
+            .navigationTitle(Text("Корзина"))
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
@@ -59,7 +61,7 @@ struct AddressComponent: View {
 }
 
 struct CartComponent: View {
-    @ObservedObject var viewModel: CartViewModel
+    @EnvironmentObject var viewModel: CartViewModel
     
     var body: some View {
         if viewModel.cart.totalItems != 0{
@@ -84,7 +86,7 @@ struct CartComponent: View {
                 Text("Товары")
                 
                 ForEach(viewModel.cart.items, id: \.product.id){ item in
-                    CartItemView(item: item, viewModel: viewModel)
+                    CartItemView(item: item)
                 }
                 
             }
@@ -97,7 +99,7 @@ struct CartComponent: View {
 
 struct CartItemView: View {
     var item: CartItem
-    @ObservedObject var viewModel: CartViewModel
+    @EnvironmentObject var viewModel: CartViewModel
     
     var body: some View {
         HStack{
@@ -196,5 +198,5 @@ struct CheckoutView: View {
 
 
 #Preview {
-    CartView(viewModel: CartViewModel())
+    CartView()
 }

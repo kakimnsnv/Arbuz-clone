@@ -9,8 +9,9 @@ import SwiftUI
 import URLImage
 
 struct HomeView: View {
-    @ObservedObject var viewModel: HomeViewModel
-    @ObservedObject var cartViewModel: CartViewModel
+    @EnvironmentObject var viewModel: HomeViewModel
+    @EnvironmentObject var cartViewModel: CartViewModel
+//    @ObservedObject var viewModel: HomeViewModel
     
     var body: some View {
         NavigationView{
@@ -24,6 +25,8 @@ struct HomeView: View {
                     
                 }
             }
+            .navigationTitle(Text("Arbuz.kz"))
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
@@ -239,5 +242,8 @@ struct RoundedCornerShape: Shape {
 
 
 #Preview {
-    HomeView(viewModel: HomeViewModel(), cartViewModel: CartViewModel())
+//    HomeView(viewModel: HomeViewModel())
+    HomeView()
+        .environmentObject(HomeViewModel())
+        .environmentObject(CartViewModel())
 }
