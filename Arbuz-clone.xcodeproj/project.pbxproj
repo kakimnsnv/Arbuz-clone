@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		B867741E2BF4116A004DF56D /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = B867741D2BF4116A004DF56D /* URLImage */; };
 		B86774202BF4116A004DF56D /* URLImageStore in Frameworks */ = {isa = PBXBuildFile; productRef = B867741F2BF4116A004DF56D /* URLImageStore */; };
+		B86774222BF4BBDD004DF56D /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86774212BF4BBDD004DF56D /* CartViewModel.swift */; };
+		B86774242BF4BCC6004DF56D /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86774232BF4BCC6004DF56D /* CartView.swift */; };
+		B86774262BF4C883004DF56D /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86774252BF4C883004DF56D /* Cart.swift */; };
 		B8FB38B12BF3FE9E002FBB1D /* Arbuz_cloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FB38B02BF3FE9E002FBB1D /* Arbuz_cloneApp.swift */; };
 		B8FB38B32BF3FE9E002FBB1D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FB38B22BF3FE9E002FBB1D /* ContentView.swift */; };
 		B8FB38B52BF3FE9F002FBB1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8FB38B42BF3FE9F002FBB1D /* Assets.xcassets */; };
@@ -19,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B86774212BF4BBDD004DF56D /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
+		B86774232BF4BCC6004DF56D /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
+		B86774252BF4C883004DF56D /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
 		B8FB38AD2BF3FE9E002FBB1D /* Arbuz-clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Arbuz-clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8FB38B02BF3FE9E002FBB1D /* Arbuz_cloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arbuz_cloneApp.swift; sourceTree = "<group>"; };
 		B8FB38B22BF3FE9E002FBB1D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -84,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				B8FB38BF2BF3FF9B002FBB1D /* Product.swift */,
+				B86774252BF4C883004DF56D /* Cart.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -110,6 +117,8 @@
 		B8FB38C32BF3FFD9002FBB1D /* Cart */ = {
 			isa = PBXGroup;
 			children = (
+				B86774212BF4BBDD004DF56D /* CartViewModel.swift */,
+				B86774232BF4BCC6004DF56D /* CartView.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -205,11 +214,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B86774222BF4BBDD004DF56D /* CartViewModel.swift in Sources */,
+				B86774242BF4BCC6004DF56D /* CartView.swift in Sources */,
 				B8FB38B32BF3FE9E002FBB1D /* ContentView.swift in Sources */,
 				B8FB38B12BF3FE9E002FBB1D /* Arbuz_cloneApp.swift in Sources */,
 				B8FB38C02BF3FF9B002FBB1D /* Product.swift in Sources */,
 				B8FB38C92BF407FA002FBB1D /* HomeView.swift in Sources */,
 				B8FB38C72BF40682002FBB1D /* HomeViewModel.swift in Sources */,
+				B86774262BF4C883004DF56D /* Cart.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
