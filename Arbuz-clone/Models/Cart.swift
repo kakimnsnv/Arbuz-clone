@@ -32,6 +32,9 @@ struct Cart{
     mutating func decrementItem(_ product: Product){
         if let index = items.firstIndex(where: {$0.product.id == product.id}){
             items[index].amount -= 1
+            if items[index].amount == 0{
+                items.remove(at: index)
+            }
         }
     }
     

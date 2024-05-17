@@ -17,7 +17,10 @@ struct CartView: View {
                 ScrollView{
                     VStack(alignment: .leading, spacing: 0){
                         AddressComponent()
-                            .padding(.bottom, 30)
+                            .padding(.bottom, 20)
+                        if viewModel.cart.total < 8000{
+                            MinAmountComponent(amount: viewModel.cart.total)
+                        }
                         
                         CartComponent()
                             .padding(.bottom, 60)
@@ -27,12 +30,30 @@ struct CartView: View {
                 }
                 VStack{
                     Spacer()
-                    CheckoutButton(amount: viewModel.cart.total)
+                    if viewModel.cart.total > 8000{
+                        CheckoutButton(amount: viewModel.cart.total)
+                    }
                 }
             }
             .navigationTitle(Text("Корзина"))
             .navigationBarTitleDisplayMode(.inline)
         }
+    }
+}
+
+struct MinAmountComponent: View {
+    var amount: Double
+    
+    var body: some View {
+        HStack{
+            Spacer()
+            Text("Заполните корзину еще на: ")
+            Text("\((8000.0 - amount).formattedString()) ₸")
+                .foregroundColor(.green)
+            Spacer()
+        }
+        .font(.headline)
+        .padding(.bottom)
     }
 }
 
@@ -97,79 +118,6 @@ struct CartComponent: View {
     }
 }
 
-struct CartItemView: View {
-    var item: CartItem
-    @EnvironmentObject var viewModel: CartViewModel
-    
-    var body: some View {
-        HStack{
-            URLImage(URL(string: item.product.imageUrl) ?? URL(string: "https://th.bing.com/th/id/OIP.ZCmFbdN2E6-q8vN1SioPOgHaHa?rs=1&pid=ImgDetMain")!){ image in
-                image
-                    .resizable()
-                    .frame(width: 100, height: 100)
-                    .aspectRatio(1, contentMode: .fit)
-                    .cornerRadius(13.0)
-            }
-            VStack{
-                HStack{
-                    Text(item.product.name)
-                    Spacer()
-                    Button{
-                        viewModel.cart.removeItem(item.product)
-                    }label: {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.black)
-                    }
-                }
-                Spacer()
-                HStack{
-                    AmountButton(item: item, cart: $viewModel.cart)
-                    Spacer()
-                    Text("\((Double(item.amount) * item.product.price).formattedString()) ₸")
-                }
-            }
-        }
-    }
-}
-
-struct AmountButton: View {
-    var item: CartItem
-    @Binding var cart: Cart
-    
-    var body: some View {
-        HStack{
-            if(item.amount == 1){
-                Button{
-                    cart.removeItem(item.product)
-                } label: {
-                    Image(systemName: "trash.fill")
-                }
-            } else {
-                Button{
-                    cart.decrementItem(item.product)
-                } label: {
-                    Image(systemName: "minus")
-                }
-            }
-            
-            Text("\((Double(item.amount) * item.product.minAmount).formattedString()) \(item.product.amountType)")
-                .padding(.horizontal, 10)
-            
-            Button{
-                cart.addItem(item.product)
-            } label: {
-                Image(systemName: "plus")
-            }
-        }
-        .padding(5)
-        .foregroundColor(.black.opacity(0.8))
-        .background(
-            RoundedRectangle(cornerRadius: 50.0)
-                .fill(Color.gray.opacity(0.3))
-        )
-    }
-}
-
 
 struct CheckoutButton: View {
     let amount: Double
@@ -199,4 +147,5 @@ struct CheckoutView: View {
 
 #Preview {
     CartView()
+        .environmentObject(CartViewModel())
 }
