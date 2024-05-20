@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="23B2073" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Product" representedClassName=".CDProduct" syncable="YES">
+        <attribute name="amountType" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="imageUrl" attributeType="String"/>
+        <attribute name="isLiked" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="minAmount" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="price" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="productDescription" optional="YES" attributeType="String"/>
+        <attribute name="remark" optional="YES" attributeType="String"/>
+        <attribute name="tags" optional="YES" attributeType="Binary"/>
+    </entity>
+</model>
