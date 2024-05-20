@@ -8,31 +8,70 @@
 import Foundation
 
 class CartViewModel: ObservableObject{
-    @Published var cart: Cart = Cart(items: [])
-    @Published var suggestionsCollections: [(title: String, products: [Product])] = []
-    
-    init(){
-        fetchCart()
-    }
+    @Published var cart: Cart = Cart()
+    @Published var suggestionsCollection: Collection = Collection(id: 1, name: "Вам может понравиться", products: [mockProduct(2), mockProduct(3), mockProduct(4)])
     
     func fetchCart(){
-        // TODO: Api fetch
+        if ApiService.shared.isLoggedIn(){
+            ApiService.shared.fetchCart{ result in
+                switch result {
+                case .success(let cart):
+                    DispatchQueue.main.async {
+                        self.cart = cart
+                    }
+                case .failure(let error):
+                    print("Error while fetchin cart in CartViewModel \(error)")
+                }
+            }
+        }
+    }
+    
+    func putCart(for cart: Cart) {
+        let c = Cart(id: cart.id, items: cart.items)
         
+        ApiService.shared.putCart(c) { result in
+            switch result {
+            case .success:
+                self.fetchCart()
+            case .failure(let error):
+                print("Error updating cart: \(error)")
+            }
+        }
+    }
+    
+    func cartTotalItems() -> Int{
+        return cart.items.reduce(0) { $0 + $1.amount}
+    }
+    
+    func cartTotal() -> Double{
+        return cart.items.reduce(0.0) { $0 + Double($1.amount) * Double($1.product.price) }
+    }
+    
+    func clearCart(){
+        let c = Cart(id: cart.id, items: [])
         
-        self.cart.items = [
-            CartItem(product: Product(id: "1", name: "Тушка Альфур цыпленка-бройлера замороженная кг", remark: "1 шт = от 1,4 до 1,65 кг", tags: ["Курица Замороженная", "Птица", "Мясо, птица"], description: "Цыпленок бройлер - это продукт для приготовления множества блюд: супов и бульонов, вторых блюд и даже закусок. Цыпленка можно обжаривать на сковороде, запекать в духовке, готовить на гриле или мангале. А отварное мясо - лучший диетический продукт.", price: 2590, imageUrl: "https://th.bing.com/th/id/OIP.ZCmFbdN2E6-q8vN1SioPOgHaHa?rs=1&pid=ImgDetMain", minAmount: 1, amountType: "кг", isLiked: false), amount: 1)
-        ]
-        
-        self.suggestionsCollections = [
-            (
-                title: "Вам может понравиться", products: [
-                    Product(id: "1", name: "Тушка Альфур цыпленка-бройлера замороженная кг", remark: "1 шт = от 1,4 до 1,65 кг", tags: ["Курица Замороженная", "Птица", "Мясо, птица"], description: "Цыпленок бройлер - это продукт для приготовления множества блюд: супов и бульонов, вторых блюд и даже закусок. Цыпленка можно обжаривать на сковороде, запекать в духовке, готовить на гриле или мангале. А отварное мясо - лучший диетический продукт.", price: 2590, imageUrl: "https://th.bing.com/th/id/OIP.ZCmFbdN2E6-q8vN1SioPOgHaHa?rs=1&pid=ImgDetMain", minAmount: 1, amountType: "кг", isLiked: false),
-                    Product(id: "2", name: "Тушка Альфур цыпленка-бройлера замороженная кг", remark: "1 шт = от 1,4 до 1,65 кг", tags: ["Курица Замороженная", "Птица", "Мясо, птица"], description: "Цыпленок бройлер - это продукт для приготовления множества блюд: супов и бульонов, вторых блюд и даже закусок. Цыпленка можно обжаривать на сковороде, запекать в духовке, готовить на гриле или мангале. А отварное мясо - лучший диетический продукт.", price: 2590, imageUrl: "https://th.bing.com/th/id/OIP.ZCmFbdN2E6-q8vN1SioPOgHaHa?rs=1&pid=ImgDetMain", minAmount: 1, amountType: "кг", isLiked: false),
-                    Product(id: "3", name: "Тушка Альфур цыпленка-бройлера замороженная кг", remark: "1 шт = от 1,4 до 1,65 кг", tags: ["Курица Замороженная", "Птица", "Мясо, птица"], description: "Цыпленок бройлер - это продукт для приготовления множества блюд: супов и бульонов, вторых блюд и даже закусок. Цыпленка можно обжаривать на сковороде, запекать в духовке, готовить на гриле или мангале. А отварное мясо - лучший диетический продукт.", price: 2590, imageUrl: "https://th.bing.com/th/id/OIP.ZCmFbdN2E6-q8vN1SioPOgHaHa?rs=1&pid=ImgDetMain", minAmount: 1, amountType: "кг", isLiked: false),
-                ]
-            ),
-        ]
-        
-        
+        ApiService.shared.putCart(c) { result in
+            switch result {
+            case .success:
+                self.fetchCart()
+            case .failure(let error):
+                print("Error clearing cart: \(error)")
+            }
+        }
+    }
+    
+    func fetchCollection(for product: Product?){
+        if ApiService.shared.isLoggedIn(){
+            ApiService.shared.fetchCollections(for: product){ result in
+                switch result {
+                case .success(let collections):
+                    DispatchQueue.main.async {
+                        self.suggestionsCollection = collections.randomElement()!
+                    }
+                case .failure(let error):
+                    print("Error fetching collection in CartViewModel \(error)")
+                }
+            }
+        }
     }
 }

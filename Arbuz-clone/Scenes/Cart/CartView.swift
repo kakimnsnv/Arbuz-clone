@@ -18,26 +18,36 @@ struct CartView: View {
                     VStack(alignment: .leading, spacing: 0){
                         AddressComponent()
                             .padding(.bottom, 20)
-                        if viewModel.cart.total < 8000{
-                            MinAmountComponent(amount: viewModel.cart.total)
+                        if viewModel.cartTotal() < 8000{
+                            MinAmountComponent(amount: viewModel.cartTotal())
                         }
                         
-                        CartComponent()
-                            .padding(.bottom, 60)
-                        
-                        HorizontalCollectionView(title: viewModel.suggestionsCollections[0].title, products: viewModel.suggestionsCollections[0].products)
+                        if ApiService.shared.isLoggedIn(){
+                            CartComponent()
+                                .padding(.bottom, 60)
+                            
+                            HorizontalCollectionView(title: viewModel.suggestionsCollection.name, products: viewModel.suggestionsCollection.products)
+                        } else {
+                            Text("Войдите в аккаунт")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        }
                     }
                 }
                 VStack{
                     Spacer()
-                    if viewModel.cart.total > 8000{
-                        CheckoutButton(amount: viewModel.cart.total)
+                    if viewModel.cartTotal() > 8000{
+                        CheckoutButton(amount: viewModel.cartTotal())
                     }
                 }
             }
             .navigationTitle(Text("Корзина"))
             .navigationBarTitleDisplayMode(.inline)
         }
+        .onAppear{
+            viewModel.fetchCart()
+            viewModel.fetchCollection(for: nil)
+        }
+        .navigationViewStyle(.stack)
     }
 }
 
@@ -85,17 +95,17 @@ struct CartComponent: View {
     @EnvironmentObject var viewModel: CartViewModel
     
     var body: some View {
-        if viewModel.cart.totalItems != 0{
+        if viewModel.cartTotalItems() != 0{
             VStack(alignment: .leading){
                 HStack{
                     Text("Корзина:")
-                    Text("\(viewModel.cart.totalItems)")
+                    Text("\(viewModel.cartTotalItems())")
                         .foregroundColor(.green)
                     
                     Spacer()
                     
                     Button{
-                        viewModel.cart.clearCart()
+                        viewModel.clearCart()
                     } label: {
                         Text("Очитить корзину")
                             .foregroundColor(.secondary)
@@ -110,6 +120,9 @@ struct CartComponent: View {
                     CartItemView(item: item)
                 }
                 
+            }
+            .onAppear{
+                viewModel.fetchCart()
             }
             .padding(.horizontal)
         } else{
@@ -148,4 +161,5 @@ struct CheckoutView: View {
 #Preview {
     CartView()
         .environmentObject(CartViewModel())
+        .environmentObject(SavedViewModel())
 }

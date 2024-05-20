@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Product {
+struct Product: Identifiable, Codable {
     let id: String
     let name: String
     let remark: String?
@@ -17,7 +17,50 @@ struct Product {
     let imageUrl: String
     let minAmount: Double
     let amountType: String
-    let isLiked: Bool
+    var isLiked: Bool
+    
+    mutating func toggleLike(){
+        self.isLiked.toggle()
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id, name, remark, tags, description, price, imageUrl, minAmount, amountType, isLiked
+    }
+    
+    init(id: String, name: String, remark: String?, tags: [String]?, description: String?, price: Double, imageUrl: String, minAmount: Double, amountType: String, isLiked: Bool) {
+        self.id = id
+        self.name = name
+        self.remark = remark
+        self.tags = tags
+        self.description = description
+        self.price = price
+        self.imageUrl = imageUrl
+        self.minAmount = minAmount
+        self.amountType = amountType
+        self.isLiked = isLiked
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        remark = try container.decodeIfPresent(String.self, forKey: .remark)
+        tags = try container.decodeIfPresent([String].self, forKey: .tags)
+        description = try container.decodeIfPresent(String.self, forKey: .description)
+        
+        // Decode price as a String and convert to Double
+        let priceString = try container.decode(String.self, forKey: .price)
+        price = Double(priceString) ?? 0.0
+        
+        imageUrl = try container.decode(String.self, forKey: .imageUrl)
+        
+        // Decode minAmount as a String and convert to Double
+        let minAmountString = try container.decode(String.self, forKey: .minAmount)
+        minAmount = Double(minAmountString) ?? 0.0
+        
+        amountType = try container.decode(String.self, forKey: .amountType)
+        isLiked = try container.decode(Bool.self, forKey: .isLiked)
+    }
 }
 
 func mockProduct(_ id: Int = 1) -> Product{

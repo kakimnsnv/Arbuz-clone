@@ -11,6 +11,7 @@ import URLImage
 struct ProductCardView: View {
     @State var isSheetOpen: Bool = false
     @EnvironmentObject var cartViewModel: CartViewModel
+    @EnvironmentObject var savedViewModel: SavedViewModel
     
     let product: Product
 
@@ -78,7 +79,9 @@ struct ProductCardView: View {
             
             if counter == 0 {
                 Button{
-                    
+                    if ApiService.shared.isLoggedIn(){
+                        cartViewModel.cart.addItem(product)
+                    }
                 } label: {
                     HStack{
                         Text("\(product.price.formattedString())₸")
@@ -101,7 +104,7 @@ struct ProductCardView: View {
             } else {
                 HStack{
                     Button{
-                        
+                        cartViewModel.cart.decrementItem(product)
                     } label: {
                         Image(systemName: "minus")
                             .font(.headline.bold())
@@ -116,7 +119,7 @@ struct ProductCardView: View {
                     .padding(.horizontal, 5)
                     
                     Button{
-                        
+                        cartViewModel.cart.addItem(product)
                     } label: {
                         Image(systemName: "plus")
                             .font(.headline.bold())
@@ -138,18 +141,17 @@ struct ProductCardView: View {
 
 struct LikeButton: View {
     var product: Product
+    @EnvironmentObject var savedViewModel: SavedViewModel
     
     var body: some View {
         Button{
-            // TODO: add to cart and like
+            savedViewModel.toggleLike(for: product)
         } label: {
-            if product.isLiked {
-                Image(systemName: "heart.fill")
-                    .foregroundColor(.red)
-            } else {
-                Image(systemName: "heart")
-                    .foregroundColor(.black)
-            }
+            Image(systemName: savedViewModel.isProductLiked(product) ? "heart.fill" : "heart")
+                .foregroundColor(savedViewModel.isProductLiked(product) ? .red : .black)
+        }
+        .onAppear{
+            savedViewModel.fetchSavedProducts()
         }
     }
 }
@@ -212,10 +214,9 @@ struct StaticCollectionView: View {
                         }
                     }
                 }
-                .padding(.bottom)
             }
         }
-        .padding()
+        .padding(.horizontal)
     }
 }
 
@@ -303,6 +304,7 @@ struct AmountButton: View {
 
 struct ProductSheetView: View {
     @EnvironmentObject var cartViewModel: CartViewModel
+    @EnvironmentObject var savedViewModel: SavedViewModel
     var collection: (title: String, products: [Product])
     var product: Product
     
@@ -362,7 +364,7 @@ private struct BuyButton: View {
     }
     
     var body: some View {
-        if cartViewModel.cart.items.contains(where: {$0.product.id != product.id}){
+        if !cartViewModel.cart.items.contains(where: {$0.product.id == product.id}){
             Button{
                 cartViewModel.cart.addItem(product)
             } label: {
@@ -505,26 +507,31 @@ private struct DescriptionView: View {
 #Preview {
     ProductSheetView(collection: (title: "Похожие товары", products: [mockProduct(), mockProduct(), mockProduct(), mockProduct()]), product: mockProduct())
         .environmentObject(CartViewModel())
+        .environmentObject(SavedViewModel())
 }
 
 #Preview{
     CartItemView(item: CartItem(product: mockProduct(), amount: 1))
         .environmentObject(CartViewModel())
+        .environmentObject(SavedViewModel())
         .frame(width: .infinity, height: 100)
 }
 
 #Preview{
     HorizontalCollectionView(title: "Horizontal Collection", products: [mockProduct(),mockProduct(2),mockProduct(3),mockProduct(4),])
     .environmentObject(CartViewModel())
+    .environmentObject(SavedViewModel())
 }
 
 
 #Preview{
     StaticCollectionView(title: "Static Collection", products: [mockProduct(),mockProduct(2),mockProduct(3),mockProduct(4),mockProduct(5),mockProduct(6),])
         .environmentObject(CartViewModel())
+        .environmentObject(SavedViewModel())
 }
 
 #Preview {
     ProductCardView(product: mockProduct())
         .environmentObject(CartViewModel())
+        .environmentObject(SavedViewModel())
 }

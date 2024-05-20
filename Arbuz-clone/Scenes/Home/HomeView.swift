@@ -18,15 +18,20 @@ struct HomeView: View {
                 VStack{
                     HeaderView(photoUrls: viewModel.headerPhotos)
                     
-                    StaticCollectionView(title: viewModel.collections[0].title, products: viewModel.collections[0].products)
-                    
-                    HorizontalCollectionView(title: viewModel.collections[0].title, products: viewModel.collections[0].products)
-                    
+                    ForEach(viewModel.collections){ collection in
+                        StaticCollectionView(title: collection.name, products: collection.products)
+                        
+                        HorizontalCollectionView(title: collection.name, products: collection.products)
+                    }
                 }
             }
             .navigationTitle(Text("Arbuz.kz"))
             .navigationBarTitleDisplayMode(.inline)
         }
+        .onAppear{
+            viewModel.fetchProducts()
+        }
+        .navigationViewStyle(.stack)
     }
 }
 
@@ -39,16 +44,17 @@ struct HeaderView: View {
                 ForEach(photoUrls, id: \.self){ photo in
                     URLImage(URL(string: photo)!){ image in
                         image
+                            .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(maxWidth: .infinity, maxHeight: 130)
                             .cornerRadius(10.0)
+                            .padding(.trailing)
                     }
                 }
             }
         }
         .cornerRadius(10.0)
         .padding()
-        
     }
 }
 

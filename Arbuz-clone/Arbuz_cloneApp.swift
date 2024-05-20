@@ -11,12 +11,16 @@ import SwiftUI
 struct Arbuz_cloneApp: App {
     @StateObject var cartViewModel: CartViewModel = CartViewModel()
     @StateObject var homeViewModel: HomeViewModel = HomeViewModel()
+    @StateObject var apiService: ApiService = ApiService.shared
+    @StateObject var savedViewModel: SavedViewModel = SavedViewModel()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(apiService)
                 .environmentObject(homeViewModel)
                 .environmentObject(cartViewModel)
+                .environmentObject(savedViewModel)
         }
     }
 }
